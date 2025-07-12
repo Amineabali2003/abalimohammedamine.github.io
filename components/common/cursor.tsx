@@ -1,5 +1,5 @@
 import styles from "./Cursor.module.scss";
-import { MutableRefObject, useEffect, useRef } from "react";
+import { MutableRefObject, useCallback, useEffect, useRef } from "react";
 import { gsap, Linear } from "gsap";
 import { IDesktop, isSmallScreen } from "pages";
 
@@ -49,7 +49,7 @@ const Cursor = ({ isDesktop }: IDesktop) => {
     });
   };
 
-  const initCursorAnimation = () => {
+  const initCursorAnimation = useCallback(() => {
     follower.current.classList.remove("hidden");
     cursor.current.classList.remove("hidden");
 
@@ -59,13 +59,13 @@ const Cursor = ({ isDesktop }: IDesktop) => {
       el.addEventListener("mouseenter", onHover);
       el.addEventListener("mouseleave", onUnhover);
     });
-  };
+  }, []);
 
   useEffect(() => {
     if (isDesktop && !isSmallScreen()) {
       initCursorAnimation();
     }
-  }, [cursor, follower, isDesktop]);
+  }, [isDesktop, initCursorAnimation]);
 
   return (
     <>

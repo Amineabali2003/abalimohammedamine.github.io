@@ -1,6 +1,6 @@
 import { METADATA } from "../constants";
 import Head from "next/head";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
@@ -30,21 +30,19 @@ export default function Home() {
   gsap.config({ nullTargetWarn: false });
 
   const [isDesktop, setisDesktop] = useState(true);
+  const timer = useRef<ReturnType<typeof setTimeout>>();
 
-  let timer: NodeJS.Timeout = null;
-
-  const debouncedDimensionCalculator = () => {
-    clearTimeout(timer);
-    timer = setTimeout(() => {
+  const debouncedDimensionCalculator = useCallback(() => {
+    clearTimeout(timer.current);
+    timer.current = setTimeout(() => {
       const isDesktopResult =
         typeof window.orientation === "undefined" &&
         navigator.userAgent.indexOf("IEMobile") === -1;
 
       window.history.scrollRestoration = "manual";
-
       setisDesktop(isDesktopResult);
     }, DEBOUNCE_TIME);
-  };
+  }, [timer]);
 
   useEffect(() => {
     debouncedDimensionCalculator();
@@ -52,7 +50,7 @@ export default function Home() {
     window.addEventListener("resize", debouncedDimensionCalculator);
     return () =>
       window.removeEventListener("resize", debouncedDimensionCalculator);
-  }, [timer]);
+  }, [debouncedDimensionCalculator]);
 
   const renderBackdrop = (): React.ReactNode => (
     <div className="fixed top-0 left-0 h-screen w-screen bg-gray-900 -z-1"></div>

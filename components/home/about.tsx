@@ -54,26 +54,26 @@ const AboutSection = () => {
     );
 
     return aboutScrollTriggerInstance.kill;
-  }, [quoteRef, targetSection]);
+  }, []);
 
-const renderQuotes = (): React.ReactNode => (
-  <h1 ref={quoteRef} className="font-medium text-3xl sm:text-4xl md:text-6xl">
-    <span
-      className={`about-1 leading-tight ${
-        willChange ? "will-change-opacity" : ""
-      }`}
-    >
-      Je suis un développeur full-stack passionné, capable de faire le lien entre le développement front-end et back-end.{" "}
-    </span>
-    <span
-      className={`about-2 leading-tight ${
-        willChange ? "will-change-opacity" : ""
-      }`}
-    >
-      Je conçois des applications performantes et évolutives, en mettant l'accent sur l'expérience utilisateur et l’architecture moderne.{" "}
-    </span>
-  </h1>
-);
+  const renderQuotes = (): React.ReactNode => (
+    <h1 ref={quoteRef} className="font-medium text-3xl sm:text-4xl md:text-6xl">
+      <span
+        className={`about-1 leading-tight ${
+          willChange ? "will-change-opacity" : ""
+        }`}
+      >
+        Je suis un d&eacute;veloppeur full-stack passionn&eacute;, capable de faire le lien entre le d&eacute;veloppement front-end et back-end.{" "}
+      </span>
+      <span
+        className={`about-2 leading-tight ${
+          willChange ? "will-change-opacity" : ""
+        }`}
+      >
+        Je con&ccedil;ois des applications performantes et &eacute;volutives, en mettant l&apos;accent sur l&apos;exp&eacute;rience utilisateur et l&rsquo;architecture moderne.{" "}
+      </span>
+    </h1>
+  );
 
   return (
     <section

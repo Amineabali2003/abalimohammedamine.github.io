@@ -13,25 +13,30 @@ const COLLABORATION_STYLE = {
 const CollaborationSection = () => {
   const quoteRef: MutableRefObject<HTMLDivElement> = useRef(null);
   const targetSection: MutableRefObject<HTMLDivElement> = useRef(null);
-
   const [willChange, setwillChange] = useState(false);
 
   const initTextGradientAnimation = (
     targetSection: MutableRefObject<HTMLDivElement>
   ): ScrollTrigger => {
+    gsap.set(quoteRef.current, { opacity: 0 });
     const timeline = gsap.timeline({ defaults: { ease: Linear.easeNone } });
     timeline
-      .from(quoteRef.current, { opacity: 0, duration: 2 })
+      .to(quoteRef.current, {
+        opacity: 1,
+        duration: 2,
+        onComplete: () => {
+          gsap.set(quoteRef.current, { opacity: 1 });
+        },
+      })
       .to(quoteRef.current.querySelector(".text-strong"), {
         backgroundPositionX: "100%",
         duration: 1,
       });
-
     return ScrollTrigger.create({
       trigger: targetSection.current,
       start: "center bottom",
       end: "center center",
-      scrub: 0,
+      scrub: false,
       animation: timeline,
       onToggle: (self) => setwillChange(self.isActive),
     });
@@ -41,7 +46,6 @@ const CollaborationSection = () => {
     targetSection: MutableRefObject<HTMLDivElement>
   ) => {
     const slidingTl = gsap.timeline({ defaults: { ease: Linear.easeNone } });
-
     slidingTl
       .to(targetSection.current.querySelector(".ui-left"), {
         xPercent: isSmallScreen() ? -500 : -150,
@@ -51,12 +55,11 @@ const CollaborationSection = () => {
         { xPercent: isSmallScreen() ? -500 : -150 },
         "<"
       );
-
     return ScrollTrigger.create({
       trigger: targetSection.current,
       start: "top bottom",
       end: "bottom top",
-      scrub: 0,
+      scrub: false,
       animation: slidingTl,
     });
   };
@@ -64,18 +67,16 @@ const CollaborationSection = () => {
   useEffect(() => {
     const textBgAnimation = initTextGradientAnimation(targetSection);
     let slidingAnimation: ScrollTrigger | undefined;
-
     const { matches } = window.matchMedia(NO_MOTION_PREFERENCE_QUERY);
-
     if (matches) {
       slidingAnimation = initSlidingTextAnimation(targetSection);
     }
-
     return () => {
       textBgAnimation.kill();
       slidingAnimation?.kill();
+      gsap.set(quoteRef.current, { opacity: 1 });
     };
-  }, [quoteRef, targetSection]);
+  }, []);
 
   const renderSlidingText = (text: string, layoutClasses: string) => (
     <p className={`${layoutClasses} ${COLLABORATION_STYLE.SLIDING_TEXT}`}>
@@ -92,7 +93,8 @@ const CollaborationSection = () => {
         willChange ? "will-change-opacity" : ""
       }`}
     >
-      N&apos;h&eacute;sitez pas &agrave; me <span className="text-strong font-bold">Contacter</span>      !
+      N&apos;h&eacute;sitez pas &agrave; me{" "}
+      <span className="text-strong font-bold">Contacter</span> !
     </h1>
   );
 
@@ -102,9 +104,7 @@ const CollaborationSection = () => {
         " User Interface Design  User Experience Design ",
         "ui-left"
       )}
-
       {renderTitle()}
-
       {renderSlidingText(
         " Frontend Development Backend ",
         "mt-6 md:mt-8 ui-right"

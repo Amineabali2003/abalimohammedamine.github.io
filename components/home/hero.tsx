@@ -35,28 +35,36 @@ const HeroSection = React.memo(() => {
   const initRevealAnimation = (
     targetSection: MutableRefObject<HTMLDivElement>
   ): GSAPTimeline => {
+    gsap.set(targetSection.current, { opacity: 0 });
+    gsap.set(targetSection.current.querySelectorAll(".seq"), { opacity: 0 });
+
     const revealTl = gsap.timeline({ defaults: { ease: Linear.easeNone } });
     revealTl
-      .to(targetSection.current, { opacity: 1, duration: 2 })
-      .from(
+      .to(targetSection.current, {
+        opacity: 1,
+        duration: 2,
+        onComplete: () => {
+          gsap.set(targetSection.current, { opacity: 1 });
+        },
+      })
+      .to(
         targetSection.current.querySelectorAll(".seq"),
-        { opacity: 0, duration: 0.5, stagger: 0.5 },
+        { opacity: 1, duration: 0.5, stagger: 0.5 },
         "<"
       );
-
     return revealTl;
   };
 
   useEffect(() => {
     const typed = initTypeAnimation(typedSpanElement);
-    initRevealAnimation(targetSection);
+    const revealAnimation = initRevealAnimation(targetSection);
 
     return () => {
-      if (typed) {
-        typed.destroy();
-      }
+      if (typed) typed.destroy();
+      revealAnimation.kill();
+      gsap.set(targetSection.current, { opacity: 1 });
     };
-  }, [typedSpanElement, targetSection]);
+  }, []);
 
   const renderBackgroundImage = (): React.ReactNode => (
     <div className={HERO_STYLES.BG_WRAPPER} style={{ maxHeight: "650px" }}>
@@ -119,7 +127,6 @@ const HeroSection = React.memo(() => {
       className={HERO_STYLES.SECTION}
       id={heroSectionRef}
       ref={targetSection}
-      style={{ opacity: 0 }}
     >
       {renderHeroContent()}
       {renderBackgroundImage()}

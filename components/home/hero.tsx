@@ -92,13 +92,13 @@ const HeroSection = React.memo(() => {
             target: "_blank",
             rel: "noreferrer",
           }}
-          href="/ABALI_Mohammed_Amine_CV.pdf"
+          href="/amines-resume.pdf"
         ></Button>
         <Button
           classes="ml-3"
           type={ButtonTypes.PRIMARY}
           name="Contactez moi"
-          href={SOCIAL_LINKS.linkedin}
+          href={`mailto:${EMAIL}`}
           otherProps={{
             target: "_blank",
             rel: "noreferrer",

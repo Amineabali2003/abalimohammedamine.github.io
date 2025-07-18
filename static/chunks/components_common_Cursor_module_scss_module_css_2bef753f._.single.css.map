@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["turbopack:///[project]/components/common/Cursor.module.scss.module.css"],"sourcesContent":[".cursor{border-radius:100%;mix-blend-mode:difference}.cursorFollower{border-radius:100%;left:-0.5rem;top:-0.5rem;background:hsla(0,0%,100%,.2);will-change:transform}"],"names":[],"mappings":"AAAA;;;;;AAAqD"}}]
+}

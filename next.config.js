@@ -2,9 +2,9 @@
 const isProd = process.env.NODE_ENV === 'production';
 
 const nextConfig = {
-  output: 'export', // 👈 Indispensable pour générer /out
+  output: 'export',
   images: {
-    unoptimized: true, // GitHub Pages ne supporte pas l'optimisation Next
+    unoptimized: true, 
   },
   basePath: isProd ? '/abalimohammedamine.github.io' : '',
   assetPrefix: isProd ? '/abalimohammedamine.github.io/' : '',

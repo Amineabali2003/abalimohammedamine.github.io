@@ -8,6 +8,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "export": "next export",
     "predeploy": "npm run build",
     "deploy": "next build && npx gh-pages -d out/ --dotfiles"
   },

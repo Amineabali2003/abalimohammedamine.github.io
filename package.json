@@ -1,7 +1,7 @@
 {
   "name": "portofolio",
   "version": "2.0.0",
-  "homepage": "https://Amineabali2003.github.io/abalimohammedamine.github.io",
+  "homepage": "https://amineabali2003.github.io/abalimohammedamine.github.io/",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",

@@ -16,9 +16,9 @@ const Button = ({
   otherProps,
 }: {
   type: ButtonTypes;
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void;
   name: string;
-  href: string;
+  href?: string;
   classes?: string;
   otherProps?: Record<string, string>;
 }) => {
@@ -29,7 +29,7 @@ const Button = ({
     <a
       {...otherProps}
       onClick={onClick}
-      href={href}
+      href={href || "#"}
       className={`${getButtonTypeStyles(type)} ${buttonClasses} ${classes}`}
     >
       {name}

@@ -99,13 +99,12 @@ const HeroSection = React.memo(() => {
         <Button
           classes="mr-3"
           type={ButtonTypes.OUTLINE}
-          name="CV"
+          name="Télécharger mon CV"
           otherProps={{
-            target: "_blank",
-            rel: "noreferrer",
+            download: "ABALI_Mohammed_Amine_Dev.pdf",
           }}
-          href="/amines-resume.pdf"
-        ></Button>
+          href="/ABALI_Mohammed_Amine_Dev.pdf"
+        />
         <Button
           classes="ml-3"
           type={ButtonTypes.PRIMARY}

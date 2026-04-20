@@ -1,8 +1,16 @@
 import { EMAIL, MENULINKS, SOCIAL_LINKS } from "../../constants";
 import Image from "next/image";
 import Button, { ButtonTypes } from "./button";
+import { useState } from "react";
 
 const Footer = () => {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopyEmail = (e: React.MouseEvent<HTMLAnchorElement>): void => {
+    navigator.clipboard.writeText(EMAIL);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
   const renderSocialIcons = (): React.ReactNode => {
     return Object.keys(SOCIAL_LINKS).map((el: keyof typeof SOCIAL_LINKS) => (
       <a
@@ -24,13 +32,12 @@ const Footer = () => {
         <Button
           classes="mr-3"
           type={ButtonTypes.OUTLINE}
-          name="CV"
+          name="Télécharger mon CV"
           otherProps={{
-            target: "_blank",
-            rel: "noreferrer",
+            download: "ABALI_Mohammed_Amine_Dev.pdf",
           }}
-          href="/amines-resume.pdf"
-        ></Button>
+          href="/ABALI_Mohammed_Amine_Dev.pdf"
+        />
         <Button
           classes="ml-3"
           type={ButtonTypes.WHITE}
@@ -41,6 +48,14 @@ const Footer = () => {
             rel: "noreferrer",
           }}
         ></Button>
+
+        <Button
+          classes="ml-3"
+          type={ButtonTypes.WHITE}
+          name={copied ? "✅ Email copié !" : "📋 Copier mon email"}
+          href="/#contact"
+          onClick={handleCopyEmail}
+        />
       </div>
     </>
   );
